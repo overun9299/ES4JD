@@ -4,12 +4,11 @@
 <head>
     <meta charset="utf-8"/>
     <title>狂神说Java-ES仿京东实战</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <script th:src="@{/js/jquery.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
 </head>
 
 <body class="pg">
-<div class="page">
+<div class="page" id="app">
     <div id="mallPage" class=" mallist tmall- page-not-market ">
 
         <!-- 头部搜索 -->
@@ -18,7 +17,7 @@
                 <div class="headerCon ">
                     <!-- Logo-->
                     <h1 id="mallLogo">
-                        <img th:src="@{/images/jdlogo.png}" alt="">
+                        <img th:src="@{/static/images/jdlogo.png}" alt="">
                     </h1>
 
                     <div class="header-extra">
@@ -31,13 +30,15 @@
                                     <div class="mallSearch-input clearfix">
                                         <div class="s-combobox" id="s-combobox-685">
                                             <div class="s-combobox-input-wrap">
-                                                <input type="text" autocomplete="off" value="dd" id="mq"
+                                                <input type="text" autocomplete="off" value="dd" id="mq" v-model="keyWord"
                                                        class="s-combobox-input" aria-haspopup="true">
                                             </div>
                                         </div>
-                                        <button type="submit" id="searchbtn">搜索</button>
+                                        <button type="button" style="right: 45px; width: 40px" @click="searchJDGoods">搜索</button>
+                                        <button type="button" style="width: 40px" @click="getJDGoodsInfo">爬虫</button>
                                     </div>
                                 </fieldset>
+
                             </form>
                             <ul class="relKeyTop">
                                 <li><a>狂神说Java</a></li>
@@ -86,21 +87,21 @@
                 <!-- 商品详情 -->
                 <div class="view grid-nosku">
 
-                    <div class="product">
-                        <div class="product-iWrap">
+                    <div class="product" v-for="result in results">
+                        <div class="product-iWrap" >
                             <!--商品封面-->
                             <div class="productImg-wrap">
                                 <a class="productImg">
-                                    <img src="https://img.alicdn.com/bao/uploaded/i1/3899981502/O1CN01q1uVx21MxxSZs8TVn_!!0-item_pic.jpg">
+                                    <img :src="result.imgUrl">
                                 </a>
                             </div>
                             <!--价格-->
                             <p class="productPrice">
-                                <em><b>¥</b>2590.00</em>
+                                <em>{{result.price}}</em>
                             </p>
                             <!--标题-->
                             <p class="productTitle">
-                                <a> dkny秋季纯色a字蕾丝dd商场同款连衣裙 </a>
+                                <a v-html="result.title">  </a>
                             </p>
                             <!-- 店铺名 -->
                             <div class="productShop">
@@ -119,8 +120,35 @@
     </div>
 </div>
 
+<script th:src="@{/static/js/vue1.js}"></script>
+<script th:src="@{/static/js/axios.js}"></script>
 <script>
-
+    new Vue({
+        el:'#app',
+        data:{
+            keyWord:'java',
+            results:[]
+        },
+        methods:{
+            searchJDGoods() {
+                axios.get('/es/jd/searchJDGoods',{
+                    params: {
+                        keyWord:this.keyWord,
+                        pageSize:10000
+                    }
+                }).then(res => {
+                    this.results = res.data
+                })
+            },
+            getJDGoodsInfo() {
+                axios.get('/es/jd/getJDInfoToES',{
+                    params: {
+                        keyWord:this.keyWord
+                    }
+                })
+            }
+        }
+    })
 </script>
 
 </body>

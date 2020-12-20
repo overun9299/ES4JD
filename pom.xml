@@ -127,6 +127,13 @@
             <version>1.18.10</version>
         </dependency>
 
+        <!-- 解析网页,爬取网页数据   爬取电影、音乐可以用tika包 -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+
 <!--        &lt;!&ndash; mybatis-plus &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>com.baomidou</groupId>-->

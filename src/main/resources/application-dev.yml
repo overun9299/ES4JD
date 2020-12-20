@@ -1,0 +1,22 @@
+elasticsearch:
+  httpHost: 192.168.190.128:9200 #多个结点中间用逗号分隔
+  connectTimeout: 1000  #http连接超时时间
+  socketTimeout: 30000 #socket连接超时时间
+  connectionRequestTimeout: 500  #获取连接的超时时间
+  maxConnTotal: 100 #最大连接数
+  maxConnPerRoute: 100  #最大路由连接数
+  executeTimeout: 8 #任务最长可执行时间 (单位:小时)
+  username:
+  password:
+
+spring:
+  datasource:
+    # 基本属性
+    name: dev
+    url: jdbc:mysql://39.105.122.65:3306/micro_service_user?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: 263385aA+
+
+es:
+  indices: xc_course
+  types: doc

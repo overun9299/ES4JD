@@ -1,7 +1,25 @@
 server:
   port: 9871
-
+  servlet:
+    context-path: /es
 spring:
+  mvc:
+    static-path-pattern: /static/**
   thymeleaf:
-    # 关闭thymeleaf缓存
     cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+  application:
+    name: micro-service-user
+logging:
+  level:
+    com: debug
+
+
+
+
